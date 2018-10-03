@@ -5,7 +5,16 @@ using System.Linq;
 
 namespace Api.Models.Network
 {
-    public class Network
+    public interface INetwork
+    {
+        Node Tree { get; set; }
+        Portfolio Portfolio { get; }
+        void Calculate(Node tree, IList<CashFlow> cashFlows);
+
+        void Calculate(ref IDictionary<int, Node> nodeDictionary, IList<CashFlow> cashFlows);
+    }
+
+    public class Network:INetwork
     {
         private readonly INodeSimulator _nodeSimulator;
         private readonly Stack<Node> _stack;
@@ -37,7 +46,7 @@ namespace Api.Models.Network
 
         private Node GenerateTree(IList<Node> nodes)
         {
-            var childHash = nodes.ToLookup(n => n.Parent.Id);
+            var childHash = nodes.ToLookup(n => n.Parent?.Id);
             foreach (var node in nodes)
             {
                 node.Children = childHash[node.Id];
