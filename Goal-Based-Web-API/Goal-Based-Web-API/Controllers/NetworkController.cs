@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Api.Models;
 using Api.Models.Network;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,22 +8,15 @@ namespace Api.Controllers
     public class NetworkController : Controller
     {
         [HttpGet]
-        public IEnumerable<NetworkView> Get()
+        public IEnumerable<string> Get()
         {
-            return new [] { new NetworkView { Id = 1, Name = "Network1" } , new NetworkView { Id = 2, Name = "Network2" } };
+            return null;
         }
 
         [HttpGet("{id}")]
-        public Network Get(int id)
+        public string Get(int id)
         {
-            if(id == 1)
-            {
-                return new Network { Id = 1, Name = "Network1" };
-            }
-            else
-            {
-                return new Network { Id = 2, Name = "Network2" };
-            }
+            return null;
         }
 
         [HttpPost]
