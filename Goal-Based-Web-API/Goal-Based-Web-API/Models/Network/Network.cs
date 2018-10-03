@@ -9,12 +9,14 @@ namespace Api.Models.Network
     {
         Node Tree { get; set; }
         Portfolio Portfolio { get; }
+        IEnumerable<CashFlow> CashFlows{ get; set; }
+
         void Calculate(Node tree, IList<CashFlow> cashFlows);
 
         void Calculate(ref IDictionary<int, Node> nodeDictionary, IList<CashFlow> cashFlows);
     }
 
-    public class Network:INetwork
+    public class Network : INetwork
     {
         private readonly INodeSimulator _nodeSimulator;
         private readonly Stack<Node> _stack;
@@ -29,6 +31,8 @@ namespace Api.Models.Network
 
         public Portfolio Portfolio { get; private set; }
 
+        public IEnumerable<CashFlow> CashFlows {get; set;}
+
         public void Calculate(Node tree, IList<CashFlow> cashFlows)
         {
             var nodes = Traverse(tree);
@@ -42,6 +46,7 @@ namespace Api.Models.Network
             IList<Node> nodes = nodeDictionary.Values.ToList();
             Portfolio = new Portfolio(ref nodes, cashFlows);
             Tree = GenerateTree(nodes);
+            CashFlows = cashFlows;
         }
 
         private Node GenerateTree(IList<Node> nodes)

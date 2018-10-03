@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace Api.Models.Network
@@ -74,6 +75,7 @@ namespace Api.Models.Network
         public double Skew { get; }
         public double Kurt { get; }
 
+        [JsonIgnore]
         public IList<double> CdfProbabilities { get; }
 
         public double GetPrice(double uniformRandom, int index)

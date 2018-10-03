@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Api.Models.Network
 {
@@ -17,8 +18,11 @@ namespace Api.Models.Network
         public bool IsPortfolioComponent { get; set; }
 
         public IList<Distribution> Distributions { get; set; }
+        [JsonIgnore]
         public IList<Simulation> Simulations { get; set; }
+        [JsonIgnore]
         public IList<IList<double>> CumulativeSimulations { get; set; }
+        [JsonIgnore]
         public IList<IList<double>> ValueSimulations { get; set; }
 
         public Node Parent { get; set; }
