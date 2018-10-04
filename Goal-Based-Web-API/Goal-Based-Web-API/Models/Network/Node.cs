@@ -24,7 +24,7 @@ namespace Api.Models.Network
         public IList<IList<double>> CumulativeSimulations { get; set; }
         [JsonIgnore]
         public IList<IList<double>> ValueSimulations { get; set; }
-
+        [JsonIgnore]
         public Node Parent { get; set; }
 
         public IEnumerable<Node> Children { get; set; }

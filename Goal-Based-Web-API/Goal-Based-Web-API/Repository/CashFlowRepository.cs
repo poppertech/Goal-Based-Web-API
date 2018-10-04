@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace Api.Repository
 {
@@ -12,11 +14,17 @@ namespace Api.Repository
 
     public class CashFlowRepository : ICashFlowRepository
     {
+        private readonly string _connectionString;
+
+        public CashFlowRepository(IOptions<ApiOptions> optionsAccessor)
+        {
+            _connectionString = optionsAccessor.Value.ConnString;
+        }
+
         public IList<CashFlow> GetCashFlowsByNetworkId(int networkId)
         {
             var cashFlows = new List<CashFlow>();
-            var connectionString = @"Data Source=BWYNNE\SQLEXPRESS;Initial Catalog=Goal-Based-Database;Integrated Security=true";
-            using (var connection = new SqlConnection(connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             using (var command = new SqlCommand("GetCashFlowsByNetworkId", connection))
             {
                 command.CommandType = CommandType.StoredProcedure;

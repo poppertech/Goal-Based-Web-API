@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Api.Logic;
 using Api.Models.Network;
-using Api.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
@@ -8,39 +7,33 @@ namespace Api.Controllers
     [Route("api/[controller]")]
     public class NetworkController : Controller
     {
-        private readonly INetwork _network;
-        public NetworkController(INetwork network)
+        private readonly INetworkService _service;
+
+        public NetworkController(INetworkService service)
         {
-            _network = network;
+            _service = service;
         }
 
         [HttpGet]
         public INetwork Get()
         {
-            var networkId = 1;
-            var cashFlowRepository = new CashFlowRepository();
-            var nodeRepository = new NodeRepository();
-            IDictionary<int, Node> nodeDictionary = nodeRepository.GetNodesByNetworkId(networkId);
-            var cashFlows = cashFlowRepository.GetCashFlowsByNetworkId(networkId);
-
-            _network.Calculate(ref nodeDictionary, cashFlows);
-            return _network;
-        }
-
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
             return null;
         }
 
+        [HttpGet("{id}")]
+        public INetwork Get(int id)
+        {
+            return _service.GetNetworkById(id);
+        }
+
         [HttpPost]
-        public Network Post([FromBody]Network network)
+        public INetwork Post([FromBody]INetwork network)
         {
             return network;
         }
 
         [HttpPut("{id}")]
-        public Network Put(int id, [FromBody]Network network)
+        public INetwork Put(int id, [FromBody]INetwork network)
         {
             return network;
         }

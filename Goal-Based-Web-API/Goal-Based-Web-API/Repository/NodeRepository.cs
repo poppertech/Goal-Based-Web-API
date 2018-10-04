@@ -1,4 +1,5 @@
 ﻿using Api.Models.Network;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -13,14 +14,19 @@ namespace Api.Repository
 
     public class NodeRepository : INodeRepository
     {
+        private readonly string _connectionString;
         private IDictionary<int, Node> _nodeDictionary;
+
+        public NodeRepository(IOptions<ApiOptions> optionsAccessor)
+        {
+            _connectionString = optionsAccessor.Value.ConnString;
+        }
 
         public IDictionary<int, Node> GetNodesByNetworkId(int networkId)
         {
             _nodeDictionary = new SortedDictionary<int, Node>();
 
-            var connectionString = @"Data Source=BWYNNE\SQLEXPRESS;Initial Catalog=Goal-Based-Database;Integrated Security=true";
-            using (var connection = new SqlConnection(connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             using (var command = new SqlCommand("GetNodesByNetworkId", connection))
             {
                 command.CommandType = CommandType.StoredProcedure;
