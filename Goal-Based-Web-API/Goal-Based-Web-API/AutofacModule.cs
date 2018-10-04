@@ -18,6 +18,8 @@ namespace Api
 
             builder.RegisterType<NodeSimulator>().As<INodeSimulator>();
             builder.RegisterType<SimulationEvaluator>().As<ISimulationEvaluator>();
+            builder.RegisterGeneric(typeof(JsonFileDeserializer<>)).As(typeof(IJsonFileDeserializer<>));
+            builder.RegisterGeneric(typeof(CsvFileDeserializer<>)).As(typeof(ICsvFileDeserializer<>));
 
             builder.RegisterType<Network>().As<INetwork>();
 
