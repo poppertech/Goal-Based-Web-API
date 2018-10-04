@@ -1,6 +1,11 @@
 ﻿using Api.Logic;
 using Api.Models.Network;
+using CsvHelper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace Api.Controllers
 {
@@ -27,9 +32,20 @@ namespace Api.Controllers
         }
 
         [HttpPost]
-        public INetwork Post([FromBody]INetwork network)
+        [Consumes("multipart/form-data")]
+        public INetwork Post([FromForm]NetworkViewModel network)
         {
-            return network;
+            using (var memoryStream = new MemoryStream())
+            {
+                network.CashFlows.CopyTo(memoryStream);
+                memoryStream.Position = 0;
+                TextReader textReader = new StreamReader(memoryStream);
+                var csv = new CsvReader(textReader);
+                csv.Configuration.HasHeaderRecord = true;
+                var records = csv.GetRecords<CashFlow>().ToList();
+            }
+
+            return null;
         }
 
         [HttpPut("{id}")]
