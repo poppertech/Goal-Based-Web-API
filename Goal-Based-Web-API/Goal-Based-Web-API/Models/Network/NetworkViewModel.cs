@@ -5,5 +5,6 @@ namespace Api.Models.Network
     public class NetworkViewModel
     {
        public IFormFile CashFlows { get; set; }
+       public IFormFile Tree { get; set; }
     }
 }

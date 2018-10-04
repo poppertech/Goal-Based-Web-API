@@ -3,6 +3,7 @@ using Api.Models.Network;
 using CsvHelper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -39,10 +40,25 @@ namespace Api.Controllers
             {
                 network.CashFlows.CopyTo(memoryStream);
                 memoryStream.Position = 0;
-                TextReader textReader = new StreamReader(memoryStream);
-                var csv = new CsvReader(textReader);
-                csv.Configuration.HasHeaderRecord = true;
-                var records = csv.GetRecords<CashFlow>().ToList();
+                using (var streamReader = new StreamReader(memoryStream))
+                using (var csv = new CsvReader(streamReader))
+                {
+                    csv.Configuration.HasHeaderRecord = true;
+                    var records = csv.GetRecords<CashFlow>().ToList();
+                }
+
+            }
+
+            using (var memoryStream = new MemoryStream())
+            {
+                network.Tree.CopyTo(memoryStream);
+                memoryStream.Position = 0;
+                using (var streamReader = new StreamReader(memoryStream))
+                using (var jsonReader = new JsonTextReader(streamReader))
+                {
+                    var serializer = new JsonSerializer();
+                    var tree = serializer.Deserialize<Node>(jsonReader);
+                }
             }
 
             return null;

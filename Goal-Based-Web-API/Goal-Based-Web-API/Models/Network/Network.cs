@@ -7,9 +7,9 @@ namespace Api.Models.Network
 {
     public interface INetwork
     {
-        Node Tree { get; set; }
+        Node Tree { get;  }
         Portfolio Portfolio { get; }
-        IEnumerable<CashFlow> CashFlows{ get; set; }
+        IEnumerable<CashFlow> CashFlows{ get;  }
 
         void Calculate(Node tree, IList<CashFlow> cashFlows);
 
@@ -27,11 +27,11 @@ namespace Api.Models.Network
             _stack = new Stack<Node>();
         }
 
-        public Node Tree { get; set; }
+        public Node Tree { get; private set; }
 
         public Portfolio Portfolio { get; private set; }
 
-        public IEnumerable<CashFlow> CashFlows {get; set;}
+        public IEnumerable<CashFlow> CashFlows {get; private set;}
 
         public void Calculate(Node tree, IList<CashFlow> cashFlows)
         {
