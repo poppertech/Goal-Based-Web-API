@@ -1,0 +1,75 @@
+{
+	"info": {
+		"_postman_id": "6f2aa3b3-e589-4613-ae93-1b7f6b26f881",
+		"name": "Goal-Based",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:18272/api/network/1",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"disabled": true
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:18272/api/network/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "18272",
+					"path": [
+						"api",
+						"network",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:18272/api/network",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "CashFlows",
+							"value": "",
+							"type": "file"
+						},
+						{
+							"key": "Tree",
+							"value": "",
+							"type": "file"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:18272/api/network",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "18272",
+					"path": [
+						"api",
+						"network"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
