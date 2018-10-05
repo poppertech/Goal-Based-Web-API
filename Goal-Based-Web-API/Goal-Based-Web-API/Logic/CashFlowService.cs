@@ -1,7 +1,6 @@
 ﻿using Api.Models.Network;
 using Api.Repository;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Api.Logic
 {

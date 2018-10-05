@@ -8,7 +8,7 @@ namespace Api.Models.Network
     {
         public Node()
         {
-            Distributions = new List<Distribution>();
+            Distributions = new List<IDistribution>();
         }
 
         public int Id { get; set; }
@@ -18,7 +18,7 @@ namespace Api.Models.Network
         public double? PortfolioWeight { get; set; }
         public bool IsPortfolioComponent { get; set; }
 
-        public IList<Distribution> Distributions { get; set; }
+        public IList<IDistribution> Distributions { get; set; }
         [JsonIgnore]
         public IList<Simulation> Simulations { get; set; }
         [JsonIgnore]
