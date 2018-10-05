@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace Api.Models.Network
 {
+
     public class Node
     {
         public Node()

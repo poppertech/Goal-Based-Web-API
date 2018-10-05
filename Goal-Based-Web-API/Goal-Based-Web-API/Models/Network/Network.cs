@@ -7,9 +7,9 @@ namespace Api.Models.Network
 {
     public interface INetwork
     {
-        Node Tree { get;  }
-        Portfolio Portfolio { get; }
-        IEnumerable<CashFlow> CashFlows{ get;  }
+        Node Tree { get; }
+        IPortfolio Portfolio { get; }
+        IEnumerable<CashFlow> CashFlows { get; }
 
         void Calculate(Node tree, IList<CashFlow> cashFlows);
 
@@ -20,18 +20,20 @@ namespace Api.Models.Network
     {
         private readonly INodeSimulator _nodeSimulator;
         private readonly Stack<Node> _stack;
+        private readonly IPortfolio _portfolio;
 
-        public Network(INodeSimulator nodeSimulator)
+        public Network(INodeSimulator nodeSimulator, IPortfolio portfolio)
         {
             _nodeSimulator = nodeSimulator;
+            _portfolio = portfolio;
             _stack = new Stack<Node>();
         }
 
         public Node Tree { get; private set; }
 
-        public Portfolio Portfolio { get; private set; }
+        public IPortfolio Portfolio { get; private set; }
 
-        public IEnumerable<CashFlow> CashFlows {get; private set;}
+        public IEnumerable<CashFlow> CashFlows { get; private set; }
 
         public void Calculate(Node tree, IList<CashFlow> cashFlows)
         {
@@ -44,7 +46,8 @@ namespace Api.Models.Network
         {
             _nodeSimulator.SimulateNodes(ref nodeDictionary);
             IList<Node> nodes = nodeDictionary.Values.ToList();
-            Portfolio = new Portfolio(ref nodes, cashFlows);
+            _portfolio.Init(ref nodes, cashFlows);
+            Portfolio = _portfolio;
             Tree = GenerateTree(nodes);
             CashFlows = cashFlows;
         }

@@ -22,6 +22,7 @@ namespace Api
             builder.RegisterGeneric(typeof(JsonFileDeserializer<>)).As(typeof(IJsonFileDeserializer<>));
             builder.RegisterGeneric(typeof(CsvFileDeserializer<>)).As(typeof(ICsvFileDeserializer<>));
 
+            builder.RegisterType<Portfolio>().As<IPortfolio>();
             builder.RegisterType<Network>().As<INetwork>();
 
             base.Load(builder);

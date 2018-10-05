@@ -3,14 +3,23 @@ using System.Linq;
 
 namespace Api.Models.Network
 {
-    public class Portfolio
+    public interface IPortfolio
     {
-        private readonly IList<Node> _nodes;
-        private readonly IList<CashFlow> _cashFlows;
+        void Init(ref IList<Node> nodes, IList<CashFlow> cashFlows);
 
-        private readonly int _numSimulations;
+        double InitialValue { get; }
 
-        public Portfolio(ref IList<Node> nodes, IList<CashFlow> cashFlows)
+        IList<double> SuccessProbabilities { get; }
+    }
+
+    public class Portfolio: IPortfolio
+    {
+        private IList<Node> _nodes;
+        private IList<CashFlow> _cashFlows;
+
+        private int _numSimulations;
+
+        public void Init(ref IList<Node> nodes, IList<CashFlow> cashFlows)
         {
             _cashFlows = cashFlows;
             _nodes = nodes.Where(n => n.IsPortfolioComponent).ToList();
@@ -24,9 +33,9 @@ namespace Api.Models.Network
             CalculateSuccessProbabilities();
         }
 
-        public double InitialValue { get; }
+        public double InitialValue { get; private set; }
 
-        public IList<double> SuccessProbabilities { get; }
+        public IList<double> SuccessProbabilities { get; private set; }
 
         private void InitNodeProperties()
         {
