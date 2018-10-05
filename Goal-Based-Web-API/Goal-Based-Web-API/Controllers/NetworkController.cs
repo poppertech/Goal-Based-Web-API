@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
     public class NetworkController : Controller
     {
@@ -33,16 +34,6 @@ namespace Api.Controllers
             return _service.GetNetwork(network);
         }
 
-        [HttpPut("{id}")]
-        public INetwork Put(int id, [FromBody]INetwork network)
-        {
-            return network;
-        }
 
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-            return;
-        }
     }
 }

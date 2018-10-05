@@ -15,6 +15,7 @@ namespace Api
             builder.RegisterType<NetworkRepository>().As<INetworkRepository>();
 
             builder.RegisterType<NetworkService>().As<INetworkService>();
+            builder.RegisterType<CashFlowService>().As<ICashFlowService>();
 
             builder.RegisterType<NodeSimulator>().As<INodeSimulator>();
             builder.RegisterType<SimulationEvaluator>().As<ISimulationEvaluator>();
