@@ -39,6 +39,7 @@ namespace Api.Logic
         private Node SimulateNode(Node node, IList<double> uniformRandoms)
         {
             var simulations = new Simulation[uniformRandoms.Count];
+            IList<Distribution> distributions = node.Distributions;
             _evaluator.Init(node.Distributions);
             Parallel.For(0, uniformRandoms.Count, cnt =>
             {

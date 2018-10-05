@@ -4,32 +4,7 @@ using System.Collections.Generic;
 
 namespace Api.Models.Network
 {
-    public interface IDistribution
-    {
-        int Id { get; }
-
-        double Minimum { get; }
-        double Worst { get; }
-        double Likely { get; }
-        double Best { get; }
-        double Maximum { get; }
-
-        double HeightWorst { get; }
-        double HeightLikely { get; }
-        double HeightBest { get; }
-
-        double Mean { get; }
-        double Stdev { get; }
-        double Skew { get; }
-        double Kurt { get; }
-
-        [JsonIgnore]
-        IList<double> CdfProbabilities { get; }
-
-        double GetPrice(double uniformRandom, int index);
-
-    }
-    public class Distribution: IDistribution
+    public class Distribution
     {
         private const double LEFT_TAIL = .1;
         private const double RIGHT_TAIL = .1;
@@ -101,9 +76,9 @@ namespace Api.Models.Network
         public double Kurt { get; }
 
         [JsonIgnore]
-        public IList<double> CdfProbabilities { get; }
+        public virtual IList<double> CdfProbabilities { get; }
 
-        public double GetPrice(double uniformRandom, int index)
+        public virtual double GetPrice(double uniformRandom, int index)
         {
             var mSim = Slopes[index];
             var bSim = Intercepts[index];

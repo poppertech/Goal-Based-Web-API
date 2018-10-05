@@ -38,7 +38,7 @@ namespace ApiTests.Logic
             //assert
             Assert.AreEqual(price, parent.Simulations[0].Price);
             Assert.AreEqual(price, child.Simulations[0].Price);
-            evaluator.Verify(e => e.Init(It.IsAny<IList<IDistribution>>()));
+            evaluator.Verify(e => e.Init(It.IsAny<IList<Distribution>>()));
             evaluator.Verify(e => e.Evaluate(It.Is<int>(ix => ix == 0), It.Is<double>(r => r == uniformRandom)));
         }
     }

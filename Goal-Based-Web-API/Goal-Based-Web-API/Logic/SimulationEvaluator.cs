@@ -6,16 +6,16 @@ namespace Api.Logic
 {
     public interface ISimulationEvaluator
     {
-        void Init(IList<IDistribution> distributions);
+        void Init(IList<Distribution> distributions);
 
         Simulation Evaluate(int distributionIndex, double uniformRandom);
     }
 
     public class SimulationEvaluator : ISimulationEvaluator
     {
-        private IList<IDistribution> _distributions;
+        private IList<Distribution> _distributions;
 
-        public void Init(IList<IDistribution> distributions)
+        public void Init(IList<Distribution> distributions)
         {
             _distributions = distributions;
         }
