@@ -32,11 +32,11 @@ namespace ApiTests.Controllers
         public void PostReturnsNetwork()
         {
             //arrange
-            var viewModel = new NetworkViewModel();
+            var viewModel = new PostNetworkViewModel();
             var network = new Mock<INetwork>();
 
             var service = new Mock<INetworkService>();
-            service.Setup(s => s.GetNetwork(It.Is<NetworkViewModel>(vm => vm == viewModel))).Returns(network.Object);
+            service.Setup(s => s.GetNetwork(It.Is<PostNetworkViewModel>(vm => vm == viewModel))).Returns(network.Object);
 
             var controller = new NetworkController(service.Object);
 
@@ -45,7 +45,7 @@ namespace ApiTests.Controllers
 
             //assert
             Assert.AreSame(network.Object, response);
-            service.Verify(s => s.GetNetwork(It.Is<NetworkViewModel>(vm => vm == viewModel)));
+            service.Verify(s => s.GetNetwork(It.Is<PostNetworkViewModel>(vm => vm == viewModel)));
         }
     }
 }

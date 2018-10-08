@@ -1,6 +1,7 @@
 ﻿using Api.Logic;
 using Api.Models.Network;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace Api.Controllers
 {
@@ -16,9 +17,9 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        public INetwork Get()
+        public IEnumerable<NetworkViewModel> Get()
         {
-            return null;
+            return _service.GetNetworks();
         }
 
         [HttpGet("{id}")]
@@ -29,7 +30,7 @@ namespace Api.Controllers
 
         [HttpPost]
         [Consumes("multipart/form-data")]
-        public INetwork Post([FromForm]NetworkViewModel network)
+        public INetwork Post([FromForm]PostNetworkViewModel network)
         {
             return _service.GetNetwork(network);
         }

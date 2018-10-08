@@ -1,12 +1,14 @@
 ﻿using Api.Models.Network;
 using Api.Repository;
+using System.Collections.Generic;
 
 namespace Api.Logic
 {
     public interface INetworkService
     {
         INetwork GetNetworkById(int id);
-        INetwork GetNetwork(NetworkViewModel network);
+        INetwork GetNetwork(PostNetworkViewModel network);
+        IEnumerable<NetworkViewModel> GetNetworks();
     }
 
     public class NetworkService: INetworkService
@@ -21,12 +23,18 @@ namespace Api.Logic
             _csvFileDeserializer = csvFileDeserializer;
             _jsonFileDeserializer = jsonFileDeserializer;
         }
+
+        public IEnumerable<NetworkViewModel> GetNetworks()
+        {
+            return _networkRepository.GetNetworks();
+        }
+
         public INetwork GetNetworkById(int id)
         {
             return _networkRepository.GetNetworkById(id);
         }
 
-        public INetwork GetNetwork(NetworkViewModel network)
+        public INetwork GetNetwork(PostNetworkViewModel network)
         {
             _csvFileDeserializer.ReadFile(network.CashFlows);
             var cashFlows = _csvFileDeserializer.GetRecords();

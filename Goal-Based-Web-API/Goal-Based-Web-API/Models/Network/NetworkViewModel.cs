@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace Api.Models.Network
+﻿namespace Api.Models.Network
 {
     public class NetworkViewModel
     {
-       public IFormFile CashFlows { get; set; }
-       public IFormFile Tree { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

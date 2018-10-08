@@ -41,7 +41,7 @@ namespace ApiTests.Logic
             var cashFlow = new CashFlow();
             var cashFlows = new[] { cashFlow };
             var cashFlowFile = new Mock<IFormFile>();
-            var viewModel = new NetworkViewModel {CashFlows = cashFlowFile.Object };
+            var viewModel = new PostNetworkViewModel {CashFlows = cashFlowFile.Object };
 
             var csvDeserializer = new Mock<ICsvFileDeserializer<CashFlow>>();
             csvDeserializer.Setup(d => d.GetRecords()).Returns(cashFlows);

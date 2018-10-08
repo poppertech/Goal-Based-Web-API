@@ -1,5 +1,8 @@
 ﻿using Api.Models.Network;
+using Microsoft.Extensions.Options;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace Api.Repository
 {
@@ -7,18 +10,45 @@ namespace Api.Repository
     {
         INetwork GetNetworkById(int id);
         INetwork GetNetwork(Node tree, IList<CashFlow> cashFlows);
+        IEnumerable<NetworkViewModel> GetNetworks();
     }
 
     public class NetworkRepository: INetworkRepository
     {
+        private readonly string _connectionString;
         private readonly INodeRepository _nodeRepository;
         private readonly ICashFlowRepository _cashFlowRepository;
         private readonly INetwork _network;
-        public NetworkRepository(INetwork network, INodeRepository nodeRepository, ICashFlowRepository cashFlowRepository)
+        public NetworkRepository(IOptions<ApiOptions> optionsAccessor, INetwork network, INodeRepository nodeRepository, ICashFlowRepository cashFlowRepository)
         {
+            _connectionString = optionsAccessor.Value.ConnString;
             _network = network;
             _nodeRepository = nodeRepository;
             _cashFlowRepository = cashFlowRepository;
+        }
+
+        public IEnumerable<NetworkViewModel> GetNetworks()
+        {
+            var networks = new List<NetworkViewModel>();
+            using (var connection = new SqlConnection(_connectionString))
+            using (var command = new SqlCommand("GetNetworks", connection))
+            {
+                command.CommandType = CommandType.StoredProcedure;
+
+                connection.Open();
+
+                using (IDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var network = new NetworkViewModel();
+                        network.Id = (int)reader["Id"];
+                        network.Name = (string)reader["Name"];
+                        networks.Add(network);
+                    }
+                }
+            }
+            return networks;
         }
 
         public INetwork GetNetworkById(int id)
