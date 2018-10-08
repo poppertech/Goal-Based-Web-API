@@ -6,9 +6,9 @@ namespace Api.Models.Network
 {
     public class Distribution
     {
-        private const double LEFT_TAIL = .1;
-        private const double RIGHT_TAIL = .1;
-        private const double TOTAL_PROBABILITY = 1;
+        private const double LEFT_TAIL = 10;
+        private const double RIGHT_TAIL = 10;
+        private const double TOTAL_PROBABILITY = 100;
         private const double NORMAL_PROBABILITY = TOTAL_PROBABILITY - LEFT_TAIL - RIGHT_TAIL;
 
         private readonly double _slope1, _slope2, _slope3, _slope4;
@@ -57,6 +57,7 @@ namespace Api.Models.Network
             Skew = GetSkewness();
             Kurt = GetKurtosis();
         }
+
         public int Id { get; }
 
         public double Minimum { get; }
@@ -86,7 +87,7 @@ namespace Api.Models.Network
             var xLower = XLower[index];
             var c1 = mSim / 2;
             var c2 = bSim;
-            var c3 = aLower - uniformRandom - ((mSim / 2) * Math.Pow(xLower, 2) + bSim * xLower);
+            var c3 = aLower - uniformRandom*100 - ((mSim / 2) * Math.Pow(xLower, 2) + bSim * xLower);
             var xSim = (-c2 + Math.Sqrt(Math.Pow(c2, 2) - 4 * c1 * c3)) / (2 * c1);
             return xSim;
         }

@@ -9,9 +9,8 @@ namespace Api.Models.Network
         public Node()
         {
             Distributions = new List<Distribution>();
+            Children = new List<Node>();
         }
-
-
 
         public int Id { get; set; }
 
