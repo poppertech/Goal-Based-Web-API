@@ -6,12 +6,32 @@ using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ApiTests.Logic
 {
     [TestClass]
     public class NetworkServiceTest
     {
+        [TestMethod]
+        public void GetNetworksOnSuccessReturnsNetworks()
+        {
+            //arrange
+            var network = new NetworkViewModel { Id = 1 };
+            var networks = new[] { network };
+
+            var repository = new Mock<INetworkRepository>();
+            repository.Setup(r => r.GetNetworks()).Returns(networks);
+
+            var service = new NetworkService(repository.Object, null, null);
+
+            //act
+            var results = service.GetNetworks();
+
+            //assert
+            Assert.AreEqual(network.Id, results.First().Id);
+        }
+
         [TestMethod]
         public void GetNetworkByIdReturnNetwork()
         {

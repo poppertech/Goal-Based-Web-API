@@ -3,12 +3,32 @@ using Api.Logic;
 using Api.Models.Network;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using System.Linq;
 
 namespace ApiTests.Controllers
 {
     [TestClass]
     public class NetworkControllerTest
     {
+        [TestMethod]
+        public void GetNetworksOnSuccessReturnsNetworks()
+        {
+            //arrange
+            var network = new NetworkViewModel { Id = 1 };
+            var networks = new[] { network };
+
+            var service = new Mock<INetworkService>();
+            service.Setup(s => s.GetNetworks()).Returns(networks);
+
+            var controller = new NetworkController(service.Object);
+
+            //act
+            var result = controller.Get();
+
+            //assert
+            Assert.AreEqual(network.Id, result.First().Id);
+        }
+
         [TestMethod]
         public void GetByIdReturnsNetwork()
         {
