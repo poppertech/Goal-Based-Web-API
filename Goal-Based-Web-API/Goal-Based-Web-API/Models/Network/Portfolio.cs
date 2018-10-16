@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Api.Models.Network
 {
@@ -50,7 +51,7 @@ namespace Api.Models.Network
             node.PortfolioWeight = node.InitialInvestment / InitialValue;
             node.ValueSimulations = new double[_numSimulations][];
             var cumulativeSimulations = new IList<double>[_numSimulations];
-            for (var portfolioCnt = 0; portfolioCnt < _numSimulations; portfolioCnt++)
+            Parallel.For(0, _numSimulations, portfolioCnt =>
             {
                 var investmentSimulations = new double[_cashFlows.Count];
                 investmentSimulations[0] = node.InitialInvestment.Value;
@@ -67,7 +68,7 @@ namespace Api.Models.Network
                     periodCumulativeSimulations[index] = cumulativeSimulation.Value;
                 }
                 cumulativeSimulations[portfolioCnt] = periodCumulativeSimulations;
-            }
+            });
             node.CumulativeSimulations = cumulativeSimulations;
         }
 
